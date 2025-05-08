@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cricket Team Registration | Aditya Thakur</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: url('https://www.shutterstock.com/shutterstock/videos/1062919048/thumb/1.jpg?ip=x480') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    background: rgba(0,0,0,0.6);
+    text-align: center;
+    padding: 1rem 0;
+  }
+  header img {
+    height: 120px;
+    margin-bottom: 0.5rem;
+  }
+  header h1 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 2.2rem;
+    text-shadow: 2px 2px 5px #0008;
+  }
+  
+  main {
+    flex-grow: 1;
+    background: rgba(0, 30, 0, 0.7);
+    max-width: 500px;
+    margin: 1rem auto 2rem auto;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #0f0;
+  }
+
+  label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 600;
+    text-shadow: 0 0 5px #000;
+  }
+
+  input[type="text"], input[type="file"], textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 6px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+  }
+  textarea {
+    resize: vertical;
+  }
+  
+  button {
+    margin-top: 1.5rem;
+    background-color: #28a745;
+    border: none;
+    padding: 12px;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px #1e7a3311;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+  }
+  button:hover {
+    background-color: #1e7a33;
+  }
+
+  #organizer {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px #0f0;
+  }
+
+  nav {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  nav button {
+    background-color: #0069d9;
+    margin: 0 6px;
+  }
+  nav button:hover {
+    background-color: #004785;
+  }
+
+  /* Team list styles */
+  #teamList {
+    background: transparent;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 15px;
+    color: #ccffcc;
+  }
+  #teamList h2 {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 18px;
+    text-shadow: 1px 1px 3px #000;
+  }
+  .team-card {
+    background: rgba(20, 50, 20, 0.8);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 0 8px #0a0;
+  }
+  .team-logo {
+    width: 90px;
+    height: 90px;
+    border-radius: 8px;
+    object-fit: contain;
+    border: 2px solid #0f0;
+    margin-right: 15px;
+    background: #000a;
+  }
+  .team-details {
+    flex-grow: 1;
+  }
+  .team-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    text-shadow: 1px 1px 2px #000;
+  }
+  .team-captain {
+    font-weight: 600;
+    font-style: italic;
+    margin-bottom: 4px;
+  }
+  .team-players {
+    font-size: 0.9rem;
+  }
+
+  /* Chart styles */
+  #chartContainer {
+    max-width: 700px;
+    margin: 1rem auto;
+    background: rgba(0, 30, 0, 0.8);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #0f0;
+  }
+
+  /* Responsive */
+  @media(max-width: 480px) {
+    main {
+      margin: 1rem;
+      max-width: 100%;
+      padding: 1rem;
+    }
+    .team-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .team-logo {
+      margin-bottom: 8px;
+      width: 70px;
+      height: 70px;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <img src="https://i.ibb.co/DDxhdtjb/pngtree-golden-trophy-in-shining-cricket-stadium-play-night-png-image-14089557-removebg-preview.png" alt="Cricket Player Holding Bat" />
+  <h1>Cricket Team Registration</h1>
+</header>
+
+<nav>
+  <button id="btnRegister">Register Team</button>
+  <button id="btnTeams">View Teams</button>
+  <button id="btnChart">Match Fixing Chart</button>
+</nav>
+
+<main id="pageRegister">
+  <h2>Register Your Cricket Team</h2>
+  <form id="teamForm">
+    <label for="teamName">Team Name:</label>
+    <input type="text" id="teamName" name="teamName" placeholder="Enter team name" required />
+
+    <label for="teamLogo">Upload Team Logo:</label>
+    <input type="file" id="teamLogo" name="teamLogo" accept="image/*" required />
+
+    <label for="captainName">Captain Name:</label>
+    <input type="text" id="captainName" name="captainName" placeholder="Enter captain name" required />
+
+    <label for="playerNames">Player Names (comma separated):</label>
+    <textarea id="playerNames" name="playerNames" rows="3" placeholder="Enter player names separated by commas" required></textarea>
+
+    <button type="submit">Submit Team for Approval</button>
+  </form>
+  <div id="submissionMessage" style="margin-top: 1rem; font-weight: 600;"></div>
+  <div id="organizer">Organizer: Aditya Thakur</div>
+</main>
+
+<main id="pageTeams" style="display:none;">
+  <h2>Approved Teams</h2>
+  <div id="teamList"></div>
+  <button id="btnBackToRegister" style="margin-top: 15px; background-color:#555;">Back to Registration</button>
+</main>
+
+<main id="pageChart" style="display:none;">
+  <h2>Team Match Fixing Chart</h2>
+  <div id="chartContainer">
+    <canvas id="chartCanvas" width="700" height="400" aria-label="Match Fixing Chart" role="img"></canvas>
+  </div>
+  <button id="btnBackToTeams" style="margin-top: 15px; background-color:#555;">Back to Teams</button>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Elements
+  const pageRegister = document.getElementById('pageRegister');
+  const pageTeams = document.getElementById('pageTeams');
+  const pageChart = document.getElementById('pageChart');
+  const btnRegister = document.getElementById('btnRegister');
+  const btnTeams = document.getElementById('btnTeams');
+  const btnChart = document.getElementById('btnChart');
+  const teamForm = document.getElementById('teamForm');
+  const submissionMessage = document.getElementById('submissionMessage');
+  const teamListDiv = document.getElementById('teamList');
+  const btnBackToRegister = document.getElementById('btnBackToRegister');
+  const btnBackToTeams = document.getElementById('btnBackToTeams');
+  const chartCanvas = document.getElementById('chartCanvas');
+
+  // State keys for storage
+  const STORAGE_PENDING = 'cricket_teams_pending';
+  const STORAGE_APPROVED = 'cricket_teams_approved';
+
+  // Navigation functions
+  function showPage(pageElement) {
+    [pageRegister, pageTeams, pageChart].forEach(p => p.style.display = 'none');
+    pageElement.style.display = 'block';
+  }
+
+  btnRegister.addEventListener('click', () => {
+    showPage(pageRegister);
+  });
+  btnTeams.addEventListener('click', () => {
+    renderApprovedTeams();
+    showPage(pageTeams);
+  });
+  btnChart.addEventListener('click', () => {
+    renderChart();
+    showPage(pageChart);
+  });
+  btnBackToRegister.addEventListener('click', () => {
+    showPage(pageRegister);
+  });
+  btnBackToTeams.addEventListener('click', () => {
+    renderApprovedTeams();
+    showPage(pageTeams);
+  });
+
+  // Helper to load image as base64 from file input
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = e => resolve(e.target.result);
+      reader.onerror = e => reject(e);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // On form submit
+  teamForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submissionMessage.textContent = '';
+    const teamName = teamForm.teamName.value.trim();
+    const captainName = teamForm.captainName.value.trim();
+    const playerNamesRaw = teamForm.playerNames.value.trim();
+    const playerNames = playerNamesRaw.split(',').map(p => p.trim()).filter(p => p);
+
+    if (!teamName || !captainName || playerNames.length === 0) {
+      submissionMessage.style.color = 'red';
+      submissionMessage.textContent = 'Please complete all fields correctly.';
+      return;
+    }
+
+    if (teamForm.teamLogo.files.length === 0) {
+      submissionMessage.style.color = 'red';
+      submissionMessage.textContent = 'Please upload a team logo.';
+      return;
+    }
+
+    // Convert logo to base64 string
+    const logoBase64 = await fileToBase64(teamForm.teamLogo.files[0]);
+
+    // Prepare team data
+    const teamData = {
+      id: 'team_' + Date.now(),
+      teamName,
+      logo: logoBase64,
+      captainName,
+      playerNames,
+      status: 'pending', // pending approval
+      submittedAt: new Date().toISOString(),
+    };
+
+    // Store pending teams in localStorage
+    let pendingTeams = JSON.parse(localStorage.getItem(STORAGE_PENDING)) || [];
+    pendingTeams.push(teamData);
+    localStorage.setItem(STORAGE_PENDING, JSON.stringify(pendingTeams));
+
+    // Create approval email body
+    const emailBodyLines = [
+      `Team Name: ${teamName}`,
+      `Captain Name: ${captainName}`,
+      `Player Names: ${playerNames.join(', ')}`,
+      `Submission Date: ${teamData.submittedAt}`,
+      `Please find the logo attached as base64 below:`,
+      `${logoBase64}`,
+      `\n\nPlease approve this team registration.`,
+    ];
+    const emailBody = encodeURIComponent(emailBodyLines.join('\n'));
+
+    // Create mailto link for approval email with all details
+    const mailtoLink = `mailto:crickettournamentassociation@gmail.com?subject=Team%20Registration Approval%20Request%20(${encodeURIComponent(teamName)})&body=${emailBody}`;
+
+    // Show submission message and email link
+    submissionMessage.style.color = 'lightgreen';
+    submissionMessage.innerHTML = `Team submitted for approval!<br>
+      Please send an approval email by clicking <a href="${mailtoLink}" target="_blank" style="color:#b0f;">here</a> (opens email client).<br>
+      After approval, an admin can approve the team here on the website.<br>
+      <button id="adminApproveBtn" style="margin-top:10px; background:#0c0; color:#000; font-weight:bold; padding:10px; border:none; border-radius:6px; cursor:pointer;">Simulate Admin Approval</button>`;
+
+    // Add event listener to simulate approval button
+    document.getElementById('adminApproveBtn').addEventListener('click', () => {
+      simulateAdminApproval(teamData.id);
+    });
+
+    teamForm.reset();
+  });
+
+  // Simulate admin approval function to approve team by id
+  function simulateAdminApproval(teamId) {
+    let pendingTeams = JSON.parse(localStorage.getItem(STORAGE_PENDING)) || [];
+    let approvedTeams = JSON.parse(localStorage.getItem(STORAGE_APPROVED)) || [];
+
+    const index = pendingTeams.findIndex(t => t.id === teamId);
+    if (index === -1) {
+      alert('Team not found or already approved.');
+      return;
+    }
+    const team = pendingTeams.splice(index, 1)[0];
+    team.status = 'approved';
+    approvedTeams.push(team);
+    localStorage.setItem(STORAGE_PENDING, JSON.stringify(pendingTeams));
+    localStorage.setItem(STORAGE_APPROVED, JSON.stringify(approvedTeams));
+    alert(`Team "${team.teamName}" approved and updated on website.`);
+    submissionMessage.textContent = '';
+  }
+
+  // Render approved teams in #teamList
+  function renderApprovedTeams() {
+    const approvedTeams = JSON.parse(localStorage.getItem(STORAGE_APPROVED)) || [];
+    if (approvedTeams.length === 0) {
+      teamListDiv.innerHTML = '<p style="text-align:center; font-weight:600; color:#ff5555;">No teams have been approved yet.</p>';
+      return;
+    }
+    teamListDiv.innerHTML = '';
+    approvedTeams.forEach(team => {
+      const teamCard = document.createElement('div');
+      teamCard.className = 'team-card';
+
+      const logoImg = document.createElement('img');
+      logoImg.className = 'team-logo';
+      logoImg.src = team.logo;
+      logoImg.alt = `${team.teamName} Logo`;
+
+      const detailsDiv = document.createElement('div');
+      detailsDiv.className = 'team-details';
+
+      const teamNameEl = document.createElement('div');
+      teamNameEl.className = 'team-name';
+      teamNameEl.textContent = team.teamName;
+
+      const captainNameEl = document.createElement('div');
+      captainNameEl.className = 'team-captain';
+      captainNameEl.textContent = `Captain: ${team.captainName}`;
+
+      const playerNamesEl = document.createElement('div');
+      playerNamesEl.className = 'team-players';
+      playerNamesEl.textContent = `Players: ${team.playerNames.join(', ')}`;
+
+      detailsDiv.appendChild(teamNameEl);
+      detailsDiv.appendChild(captainNameEl);
+      detailsDiv.appendChild(playerNamesEl);
+
+      teamCard.appendChild(logoImg);
+      teamCard.appendChild(detailsDiv);
+      teamListDiv.appendChild(teamCard);
+    });
+  }
+
+  // Render match fixing chart with sample data
+  function renderChart() {
+    const approvedTeams = JSON.parse(localStorage.getItem(STORAGE_APPROVED)) || [];
+    if (approvedTeams.length === 0) {
+      chartCanvas.style.display = 'none';
+      chartContainer = document.getElementById('chartContainer');
+      chartContainer.innerHTML = '<p style="text-align:center; font-weight:600; color:#ff5555;">No teams approved yet. Chart cannot be displayed.</p>';
+      return;
+    } else {
+      chartCanvas.style.display = 'block';
+    }
+
+    const teamNames = approvedTeams.map(t => t.teamName);
+    // For demonstration, generate random "match fixing suspicion" values between 0 and 100
+    const matchFixingScores = approvedTeams.map(() => Math.floor(Math.random() * 100));
+
+    // Clear previous chart if any
+    if (window.matchFixingChartInstance) {
+      window.matchFixingChartInstance.destroy();
+    }
+
+    const ctx = chartCanvas.getContext('2d');
+    window.matchFixingChartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: teamNames,
+        datasets: [{
+          label: 'Match Fixing Suspicion Score (0-100)',
+          data: matchFixingScores,
+          backgroundColor: 'rgba(0,255,0,0.7)',
+          borderColor: 'rgba(0,200,0,1)',
+          borderWidth: 1,
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            },
+            title: {
+              display: true,
+              text: 'Suspicion Score'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Teams'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#ccffcc',
+              font: {
+                size: 14,
+                weight: 'bold'
+              }
+            }
+          },
+          tooltip: {
+            enabled: true,
+            backgroundColor: '#004400',
+            titleColor: '#b0ffb0',
+            bodyColor: '#e0ffe0',
+          }
+        }
+      }
+    });
+  }
+
+  // Initialize on load to show registration page
+  showPage(pageRegister);
+</script>
+</body>
+</html>
+</content>
+</create_file>
+
+<attempt_completion>
